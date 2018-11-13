@@ -1,0 +1,31 @@
+{
+  "name": "simple-react-chat",
+  "version": "1.0.0",
+  "description": "Simple socket.io and react-based chat. Inspired by https://socket.io/get-started/chat, https://github.com/Telpenair/chat-react-socketand and https://github.com/justadudewhohacks/websocket-chat",
+  "scripts": {
+    "server": "node ./server/server.js",
+    "client": "webpack-dev-server"
+  },
+  "author": "Peter Savichev (proton) <psavichev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-hot-loader": "^3.1.3",
+    "socket.io": "^2.0.4",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.1",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.6.1"
+  }
+}
