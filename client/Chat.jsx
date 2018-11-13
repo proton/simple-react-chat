@@ -6,10 +6,10 @@ export default class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
-      isLoaded: true,
       messages: [],
-      newMessageText: ''
+      newMessageText: '',
+      username: null,
+      ready: false
     };
   }
 
@@ -19,34 +19,40 @@ export default class Chat extends React.Component {
 
   onNewMessageSend(event) {
     event.preventDefault();
-    socket.emit('chat message', this.state.newMessageText);
+    socket.emit('chat message', {
+      username: this.state.username,
+      text: this.state.newMessageText
+    });
+    this.setState({newMessageText: ''});
   }
 
-
   componentDidMount() {
+    socket.on('initialize', ({username}) => {
+      this.setState({
+        ready: true,
+        username: username
+      });
+    });
     socket.on('chat message', (msg) => {
       const messages = this.state.messages.slice();
       this.setState({
-        isLoaded: true,
         messages: messages.concat([msg]),
       });
     });
   }
 
   render() {
-    const { error, isLoaded, messages } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
+    const { ready, messages } = this.state;
+    if (!ready) {
       return <div>Loading...</div>;
     } else {
       return (
         <div>
           <div>
             <ul id="messages">
-            {messages.map((item, index) => ( 
+            {messages.map((message, index) => ( 
                 <li key={index}>
-                  {item}
+                  {message.username}: {message.text}
                 </li>
               ))}
             </ul>

@@ -1,15 +1,26 @@
 const server = require('http').createServer()
 const io = require('socket.io')(server)
 
+let usernameIncrement = 1;
+
 io.on('connection', function(socket){
-  io.emit('chat message', 'new user connected');
-	socket.on('disconnect', function(){
-    io.emit('chat message', 'user disconnect');
+  let username = `user${usernameIncrement}`;
+  ++usernameIncrement;
+  socket.emit('initialize', {
+    username: username
   });
-	socket.on('chat message', function(msg){
-		io.emit('chat message', msg);
-		console.log(msg);
-	});
+  
+  io.emit('chat message', {
+    username: '***',
+    text: `${username} connected`
+  });
+	socket.on('disconnect', function(){
+    io.emit('chat message', {
+      username: '***',
+      text: `${username} disconnected`
+    });
+  });
+	socket.on('chat message', (message) => { io.emit('chat message', message) });
 });
 
 server.listen(9000, function (err) {
