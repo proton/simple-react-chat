@@ -27,10 +27,11 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
-    socket.on('initialize', ({username}) => {
+    socket.on('initialize', ({username, messages}) => {
       this.setState({
         ready: true,
-        username: username
+        username: username,
+        messages: messages
       });
     });
     socket.on('chat message', (msg) => {

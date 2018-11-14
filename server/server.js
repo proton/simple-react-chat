@@ -2,28 +2,38 @@ const server = require('http').createServer()
 const io = require('socket.io')(server)
 
 let usernameIncrement = 1;
+let lastMessages = [];
 
-io.on('connection', function(socket){
+io.on('connection', (socket) => {
   let username = `user${usernameIncrement}`;
   ++usernameIncrement;
   socket.emit('initialize', {
-    username: username
+    username: username,
+    messages: lastMessages
   });
   
-  io.emit('chat message', {
+  sendMessage({
     username: '***',
     text: `${username} connected`
   });
-	socket.on('disconnect', function(){
-    io.emit('chat message', {
+	socket.on('disconnect', _ => {
+    sendMessage({
       username: '***',
       text: `${username} disconnected`
     });
   });
-	socket.on('chat message', (message) => { io.emit('chat message', message) });
+	socket.on('chat message', (message) => {
+    sendMessage(message);
+  });
 });
 
-server.listen(9000, function (err) {
-  if (err) throw err
+function sendMessage(message) {
+  lastMessages = lastMessages.slice(-10);
+  lastMessages.push(message);
+  io.emit('chat message', message);
+}
+
+server.listen(9000, (error) => {
+  if (error) throw error
   console.log('listening on port 9000')
 })
