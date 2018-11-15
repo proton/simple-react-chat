@@ -7,6 +7,7 @@ export default class Chat extends React.Component {
     super(props);
     this.state = {
       messages: [],
+      userNames: ['vasya', 'petya'],
       newMessageText: '',
       username: null,
       ready: false
@@ -43,26 +44,37 @@ export default class Chat extends React.Component {
   }
 
   render() {
-    const { ready, messages } = this.state;
+    const { ready, messages, userNames } = this.state;
     if (!ready) {
       return <div>Loading...</div>;
     } else {
       return (
         <div>
-          <div>
-            <ul id="messages">
-            {messages.map((message, index) => ( 
-                <li key={index}>
-                  {message.username}: {message.text}
-                </li>
-              ))}
-            </ul>
+          <div style={{display: 'inline-block', width: '70%'}}>
+            <div>
+              <ul id="messages">
+              {messages.map((message, index) => ( 
+                  <li key={index}>
+                    {message.username}: {message.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <form onSubmit={this.onNewMessageSend.bind(this)}>
+                <input type="text" value={this.state.newMessageText} onChange={this.onNewMessageTextChange.bind(this)} />
+                <input type="submit" value="Submit" />
+              </form>
+            </div>
           </div>
-          <div>
-            <form onSubmit={this.onNewMessageSend.bind(this)}>
-              <input type="text" value={this.state.newMessageText} onChange={this.onNewMessageTextChange.bind(this)} />
-              <input type="submit" value="Submit" />
-            </form> 
+          <div style={{display: 'inline-block', width: '25%'}}>
+              <ul id="messages">
+              {userNames.map((userName, index) => ( 
+                  <li key={index}>
+                    {userName}
+                  </li>
+                ))}
+              </ul>
           </div>
         </div>
       )
