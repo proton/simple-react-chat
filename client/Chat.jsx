@@ -1,5 +1,7 @@
 import React from 'react'
 
+import MessageList from './MessageList'
+
 const io = require('socket.io-client')
 
 const socket = io.connect('http://localhost:9000')
@@ -58,15 +60,7 @@ export default class Chat extends React.Component {
     return (
       <div>
         <div>
-          <ul className="messages">
-            {messages.map((message, index) => (
-                message.username ? (
-                  <li className="messages-message" key={index}>{message.username}: {message.text}</li>
-                ) : (
-                  <li className="messages-message messages-message-system" key={index}>{message.text}</li>
-                )
-              ))}
-          </ul>
+          <MessageList messages={messages} />
           <ul className="users">
             {users.map((user, _index) => (
               <li key={user.id} className={`users-user${user.id === currentUser.id ? ' users-user-current' : ''}`}>
