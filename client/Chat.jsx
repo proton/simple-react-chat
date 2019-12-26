@@ -1,6 +1,7 @@
 import React from 'react'
 
 import MessageList from './MessageList'
+import UserList from './UserList'
 
 const io = require('socket.io-client')
 
@@ -61,13 +62,7 @@ export default class Chat extends React.Component {
       <div>
         <div>
           <MessageList messages={messages} />
-          <ul className="users">
-            {users.map((user, _index) => (
-              <li key={user.id} className={`users-user${user.id === currentUser.id ? ' users-user-current' : ''}`}>
-                {user.name}
-              </li>
-              ))}
-          </ul>
+          <UserList users={users} currentUser={currentUser} />
         </div>
         <div>
           <form className="new-message-form" onSubmit={this.onNewMessageSend.bind(this)}>
