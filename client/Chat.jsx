@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const io = require('socket.io-client')
 
@@ -6,14 +6,14 @@ const socket = io.connect('http://localhost:9000')
 
 export default class Chat extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       messages: [],
       users: [],
       newMessageText: '',
       username: null,
-      ready: false
-    };
+      ready: false,
+    }
   }
 
   componentDidMount() {
@@ -21,39 +21,39 @@ export default class Chat extends React.Component {
       this.setState({
         ready: true,
         username,
-        messages
-      });
-    });
+        messages,
+      })
+    })
     socket.on('chat message', (msg) => {
-      const messages = this.state.messages.slice();
+      const messages = this.state.messages.slice()
       this.setState({
-        messages: messages.concat([msg])
-      });
-    });
+        messages: messages.concat([msg]),
+      })
+    })
     socket.on('userlist updated', (users) => {
       this.setState({
-        users
-      });
-    });
+        users,
+      })
+    })
   }
 
   onNewMessageTextChange(event) {
-    this.setState({ newMessageText: event.target.value });
+    this.setState({ newMessageText: event.target.value })
   }
 
   onNewMessageSend(event) {
-    event.preventDefault();
+    event.preventDefault()
     socket.emit('chat message', {
       username: this.state.username,
-      text: this.state.newMessageText
-    });
-    this.setState({ newMessageText: '' });
+      text: this.state.newMessageText,
+    })
+    this.setState({ newMessageText: '' })
   }
 
   render() {
-    const { ready, messages, users } = this.state;
+    const { ready, messages, users } = this.state
     if (!ready) {
-      return <div>Loading...</div>;
+      return <div>Loading...</div>
     }
     return (
       <div>

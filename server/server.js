@@ -1,8 +1,8 @@
-const ChatServer = require('./ChatServer.js');
+const ChatServer = require('./ChatServer.js')
 
-const server = require('http').createServer();
+const server = require('http').createServer()
 
-let chatServer = new ChatServer(server);
+const chatServer = new ChatServer(server)
 
 server.listen(9000, (error) => {
   if (error) throw error
