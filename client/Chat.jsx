@@ -11,16 +11,16 @@ export default class Chat extends React.Component {
       messages: [],
       users: [],
       newMessageText: '',
-      username: null,
+      currentUser: { id: null, name: null },
       ready: false,
     }
   }
 
   componentDidMount() {
-    socket.on('initialize', ({ username, messages }) => {
+    socket.on('initialize', ({ user, messages }) => {
       this.setState({
         ready: true,
-        username,
+        currentUser: user,
         messages,
       })
     })
@@ -44,17 +44,17 @@ export default class Chat extends React.Component {
   onNewMessageSend(event) {
     event.preventDefault()
     socket.emit('chat message', {
-      username: this.state.username,
       text: this.state.newMessageText,
     })
     this.setState({ newMessageText: '' })
   }
 
-  render() {
-    const { ready, messages, users } = this.state
-    if (!ready) {
-      return <div>Loading...</div>
-    }
+  renderNotReady() {
+    return <div>Loading...</div>
+  }
+
+  renderReady() {
+    const { messages, users, currentUser } = this.state
     return (
       <div>
         <div>
@@ -67,7 +67,7 @@ export default class Chat extends React.Component {
           </ul>
           <ul className="users">
             {users.map((user, _index) => (
-              <li key={user.id}>
+              <li key={user.id} className={`users-user${user.id === currentUser.id ? ' users-user-current' : ''}`}>
                 {user.name}
               </li>
               ))}
@@ -81,5 +81,10 @@ export default class Chat extends React.Component {
         </div>
       </div>
     )
+  }
+
+  render() {
+    const { ready } = this.state
+    return ready ? this.renderReady() : this.renderNotReady()
   }
 }

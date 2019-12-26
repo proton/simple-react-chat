@@ -50,3 +50,7 @@ body {
 .messages li:nth-child(odd), .users li:nth-child(odd) {
   background: #eee;
 }
+
+.users-user-current {
+  font-weight: bold;
+}
