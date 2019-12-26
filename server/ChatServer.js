@@ -17,6 +17,7 @@ class ChatServer {
   onConnection(socket) {
     const chatUser = new ChatUser(this, socket, ++this.userIdIncrement);
     this.chatUsers.push(chatUser);
+    this.io.emit('userlist updated', this.chatUsers.map(user => user.toJson()));
   }
 
   sendMessage(message) {

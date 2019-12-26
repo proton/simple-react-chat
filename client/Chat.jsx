@@ -7,7 +7,7 @@ export default class Chat extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      userNames: ['vasya', 'petya'],
+      users: [],
       newMessageText: '',
       username: null,
       ready: false
@@ -41,40 +41,41 @@ export default class Chat extends React.Component {
         messages: messages.concat([msg]),
       });
     });
+    socket.on('userlist updated', (users) => {
+      this.setState({
+        users: users,
+      });
+    });
   }
 
   render() {
-    const { ready, messages, userNames } = this.state;
+    const { ready, messages, users } = this.state;
     if (!ready) {
       return <div>Loading...</div>;
     } else {
       return (
         <div>
-          <div style={{display: 'inline-block', width: '70%'}}>
-            <div>
-              <ul id="messages">
-              {messages.map((message, index) => ( 
-                  <li key={index}>
-                    {message.username}: {message.text}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <form onSubmit={this.onNewMessageSend.bind(this)}>
-                <input type="text" value={this.state.newMessageText} onChange={this.onNewMessageTextChange.bind(this)} />
-                <input type="submit" value="Submit" />
-              </form>
-            </div>
+          <div>
+            <ul class="messages">
+            {messages.map((message, index) => ( 
+                <li key={index}>
+                  {message.username}: {message.text}
+                </li>
+              ))}
+            </ul>
+            <ul class="users">
+            {users.map((user, index) => ( 
+                <li key={index}>
+                  {user.name}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div style={{display: 'inline-block', width: '25%'}}>
-              <ul id="messages">
-              {userNames.map((userName, index) => ( 
-                  <li key={index}>
-                    {userName}
-                  </li>
-                ))}
-              </ul>
+          <div>
+            <form class="new-message-form" onSubmit={this.onNewMessageSend.bind(this)}>
+              <input type="text" value={this.state.newMessageText} onChange={this.onNewMessageTextChange.bind(this)} />
+              <input type="submit" value="Submit" />
+            </form>
           </div>
         </div>
       )

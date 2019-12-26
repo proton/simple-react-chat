@@ -29,6 +29,13 @@ class ChatUser {
   sendDisconnectedMessage() {
     this.chatServer.sendSystemMessage(`${this.username} disconnected`)
   }
+
+  toJson() {
+    return {
+      id: this.userId,
+      name: this.username
+    }
+  }
 }
 
 module.exports = ChatUser;
