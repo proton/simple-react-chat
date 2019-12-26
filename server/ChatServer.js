@@ -18,13 +18,13 @@ class ChatServer {
     this.userIdIncrement += 1
     const chatUser = new ChatUser(this, socket, this.userIdIncrement)
     this.chatUsers.set(chatUser.userId, chatUser)
-    this.sendMessage({ message: `${chatUser.username} connected` })
+    this.sendMessage({ text: `${chatUser.username} connected` })
     this.notifyUserListUpdate()
   }
 
   onDisconnection(chatUser) {
     this.chatUsers.delete(chatUser.userId)
-    this.sendMessage({ message: `${chatUser.username} disconnected` })
+    this.sendMessage({ text: `${chatUser.username} disconnected` })
     this.notifyUserListUpdate()
   }
 

@@ -8,7 +8,7 @@ class ChatUser {
     this.sendInitializeInfo = this.sendInitializeInfo.bind(this)
 
     this.sendInitializeInfo()
-    this.socket.on('chat message', message => chatServer.sendMessage({ username: this.username, message }))
+    this.socket.on('chat message', ({ text }) => chatServer.sendMessage({ username: this.username, text }))
     this.socket.on('disconnect', _ => chatServer.onDisconnection(this))
   }
 

@@ -54,3 +54,8 @@ body {
 .users-user-current {
   font-weight: bold;
 }
+
+.messages-message-system {
+  font-style: italic;
+  color: gray;
+}

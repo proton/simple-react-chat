@@ -24,10 +24,10 @@ export default class Chat extends React.Component {
         messages,
       })
     })
-    socket.on('chat message', (msg) => {
+    socket.on('chat message', (message) => {
       const messages = this.state.messages.slice()
       this.setState({
-        messages: messages.concat([msg]),
+        messages: messages.concat([message]),
       })
     })
     socket.on('userlist updated', (users) => {
@@ -60,9 +60,11 @@ export default class Chat extends React.Component {
         <div>
           <ul className="messages">
             {messages.map((message, index) => (
-              <li key={index}>
-                {message.username}: {message.text}
-              </li>
+                message.username ? (
+                  <li className="messages-message" key={index}>{message.username}: {message.text}</li>
+                ) : (
+                  <li className="messages-message messages-message-system" key={index}>{message.text}</li>
+                )
               ))}
           </ul>
           <ul className="users">
