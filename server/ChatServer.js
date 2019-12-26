@@ -4,7 +4,7 @@ class ChatServer {
   constructor(server) {
     this.userIdIncrement = 0;
     this.lastMessages = [];
-    this.chatUsers = [];
+    this.chatUsers = new Map();
     this.io = require('socket.io')(server);
 
     this.onConnection = this.onConnection.bind(this);
@@ -16,8 +16,19 @@ class ChatServer {
 
   onConnection(socket) {
     const chatUser = new ChatUser(this, socket, ++this.userIdIncrement);
-    this.chatUsers.push(chatUser);
-    this.io.emit('userlist updated', this.chatUsers.map(user => user.toJson()));
+    this.chatUsers[chatUser.userId] = chatUser;
+    this.sendSystemMessage(`${this.username} connected`)
+    this.notifyUserListUpdate()
+  }
+
+  onDisconnection(chatUser) {
+    this.sendSystemMessage(`${this.username} disconnected`)
+    this.notifyUserListUpdate()
+  }
+
+  notifyUserListUpdate() {
+    const chatUsersJson = this.chatUsers.values().map(user => user.toJson());
+    this.io.emit('userlist updated', chatUsersJson);
   }
 
   sendMessage(message) {
@@ -29,7 +40,7 @@ class ChatServer {
   sendSystemMessage(text) {
     this.sendMessage({
       username: '***',
-      text: text
+      text
     });
   }
 }

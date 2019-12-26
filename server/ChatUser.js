@@ -12,7 +12,7 @@ class ChatUser {
     this.sendInitializeInfo()
     this.sendConnectedMessage()
     this.socket.on('chat message', chatServer.sendMessage);
-    this.socket.on('disconnect', this.sendDisconnectedMessage);
+    this.socket.on('disconnect', _ => chatServer.onDisconnection(this));
   }
 
   sendInitializeInfo() {
@@ -20,14 +20,6 @@ class ChatUser {
       username: this.username,
       messages: this.chatServer.lastMessages
     })
-  }
-
-  sendConnectedMessage() {
-    this.chatServer.sendSystemMessage(`${this.username} connected`)
-  }
-
-  sendDisconnectedMessage() {
-    this.chatServer.sendSystemMessage(`${this.username} disconnected`)
   }
 
   toJson() {

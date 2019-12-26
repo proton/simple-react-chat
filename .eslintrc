@@ -3,7 +3,7 @@
   "rules": {
     "linebreak-style": [
       "error",
-      "windows"
+      "unix"
     ],
     "comma-dangle": ["error", {"functions": "never"}],
     "no-underscore-dangle": 0,
