@@ -66,8 +66,8 @@ export default class Chat extends React.Component {
               ))}
           </ul>
           <ul className="users">
-            {users.map((user, index) => (
-              <li key={index}>
+            {users.map((user, _index) => (
+              <li key={user.id}>
                 {user.name}
               </li>
               ))}

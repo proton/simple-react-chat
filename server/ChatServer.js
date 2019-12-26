@@ -17,8 +17,8 @@ class ChatServer {
   onConnection(socket) {
     this.userIdIncrement += 1
     const chatUser = new ChatUser(this, socket, this.userIdIncrement)
-    this.chatUsers[chatUser.userId] = chatUser
-    this.sendSystemMessage(`${this.username} connected`)
+    this.chatUsers.set(chatUser.userId, chatUser)
+    this.sendSystemMessage(`${chatUser.username} connected`)
     this.notifyUserListUpdate()
   }
 
@@ -29,8 +29,8 @@ class ChatServer {
   }
 
   notifyUserListUpdate() {
-    // const chatUsersJson = this.chatUsers.values().map(user => user.toJson())
-    // this.io.emit('userlist updated', chatUsersJson)
+    const chatUsersJson = Array.from(this.chatUsers.values(), user => user.toJson())
+    this.io.emit('userlist updated', chatUsersJson)
   }
 
   sendMessage(message) {

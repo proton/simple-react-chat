@@ -42,6 +42,7 @@ body {
 }
 .users {
   width: 25%;
+  border-left: 1px solid black;
 }
 .messages li, .users li { 
   padding: 5px 10px; 
