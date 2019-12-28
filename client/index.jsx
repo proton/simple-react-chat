@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import Chat from './Chat';
+import Chat from './Chat'
 
-import './index.css';
+import './index.css'
 
 ReactDOM.render(
   <Chat />,
-  document.getElementById('root')
+  document.getElementById('root'),
 )
 
 if (module.hot) {
@@ -16,7 +16,7 @@ if (module.hot) {
     const NextChat = require('./Chat').default
     ReactDOM.render(
       <NextChat />,
-      document.getElementById('root')
+      document.getElementById('root'),
     )
   })
 }

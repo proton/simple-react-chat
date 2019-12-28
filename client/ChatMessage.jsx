@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class ChatMessage extends React.Component {
   renderUserMessage({ message, key }) {
@@ -16,4 +17,9 @@ export default class ChatMessage extends React.Component {
       this.renderUserMessage({ message, key }) :
       this.renderSystemMessage({ message, key })
   }
+}
+
+ChatMessage.propTypes = {
+  key: PropTypes.number.isRequired,
+  message: PropTypes.object.isRequired,
 }

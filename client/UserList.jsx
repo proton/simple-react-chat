@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class UserList extends React.Component {
   isCurrentUser(user) {
@@ -19,4 +20,9 @@ export default class UserList extends React.Component {
       </ul>
     )
   }
+}
+
+UserList.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
