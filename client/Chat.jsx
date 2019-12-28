@@ -1,6 +1,7 @@
 import React from 'react'
 
 import MessageList from './MessageList'
+import NewMessageForm from './NewMessageForm'
 import UserList from './UserList'
 
 const io = require('socket.io-client')
@@ -13,7 +14,6 @@ export default class Chat extends React.Component {
     this.state = {
       messages: [],
       users: [],
-      newMessageText: '',
       currentUser: { id: null, name: null },
       ready: false,
     }
@@ -40,16 +40,10 @@ export default class Chat extends React.Component {
     })
   }
 
-  onNewMessageTextChange(event) {
-    this.setState({ newMessageText: event.target.value })
-  }
-
-  onNewMessageSend(event) {
-    event.preventDefault()
+  onNewMessageSend(text) {
     socket.emit('chat message', {
-      text: this.state.newMessageText,
+      text,
     })
-    this.setState({ newMessageText: '' })
   }
 
   renderNotReady() {
@@ -65,10 +59,7 @@ export default class Chat extends React.Component {
           <UserList users={users} currentUser={currentUser} />
         </div>
         <div>
-          <form className="new-message-form" onSubmit={this.onNewMessageSend.bind(this)}>
-            <input type="text" value={this.state.newMessageText} onChange={this.onNewMessageTextChange.bind(this)} />
-            <input type="submit" value="Submit" />
-          </form>
+          <NewMessageForm onMessageSend={this.onNewMessageSend} />
         </div>
       </div>
     )
