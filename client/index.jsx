@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import Chat from './Chat'
 
-import './index.css'
+import './index.scss'
 
 ReactDOM.render(
   <Chat />,

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 export default class ChatMessage extends React.Component {
   renderUserMessage({ message, key }) {
-    return <li className="messages-message" key={key}>{message.username}: {message.text}</li>
+    return <li className="message-list__message" key={key}><b>{message.username}</b>: {message.text}</li>
   }
 
   renderSystemMessage({ message, key }) {
-    return <li className="messages-message messages-message-system" key={key}>{message.text}</li>
+    return <li className="message-list__message message-list__message__system" key={key}>{message.text}</li>
   }
 
   render() {

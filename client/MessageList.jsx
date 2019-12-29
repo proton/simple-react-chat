@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ChatMessage from './ChatMessage'
 
 const MessageList = ({ messages }) => (
-  <ul className="messages">
+  <ul className="message-list">
     {messages.map((message, index) => (
       <ChatMessage message={message} key={index} />
     ))}

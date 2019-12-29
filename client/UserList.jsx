@@ -7,7 +7,7 @@ export default class UserList extends React.Component {
   }
 
   renderUser(user) {
-    const className = this.isCurrentUser(user) ? 'users-user users-user-current' : 'users-user'
+    const className = this.isCurrentUser(user) ? 'user-list__user user-list__user__current' : 'user-list__user'
     return <li key={user.id} className={className}>{user.name}</li>
   }
 
@@ -15,7 +15,7 @@ export default class UserList extends React.Component {
     const { users } = this.props
 
     return (
-      <ul className="users">
+      <ul className="user-list">
         {users.map(user => this.renderUser(user))}
       </ul>
     )
