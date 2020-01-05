@@ -46,6 +46,12 @@ export default class Chat extends React.Component {
     })
   }
 
+  onCurrentUserNameChange(username) {
+    socket.emit('username change', {
+      username,
+    })
+  }
+
   renderNotReady() {
     return <div>Loading...</div>
   }
@@ -56,7 +62,7 @@ export default class Chat extends React.Component {
       <div>
         <div>
           <MessageList messages={messages} />
-          <UserList users={users} currentUser={currentUser} />
+          <UserList users={users} currentUser={currentUser} onCurrentUserNameChange={this.onCurrentUserNameChange} />
         </div>
         <div>
           <NewMessageForm onMessageSend={this.onNewMessageSend} />

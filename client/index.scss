@@ -24,7 +24,7 @@ body {
     width: 90%; 
     margin-right: .5% 
   }
-  .input[type=submit] { 
+  &__submit { 
     width: 9%; 
     background: rgb(130, 224, 255); 
     border: none; 
@@ -60,5 +60,6 @@ body {
   
   &__user__current {
     font-weight: bold;
+    cursor: pointer;
   }
 }

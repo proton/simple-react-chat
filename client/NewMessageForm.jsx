@@ -28,7 +28,7 @@ export default class NewMessageForm extends React.Component {
     return (
       <form className="new-message-form" onSubmit={this.onMessageSend}>
         <input type="text" value={messageText} onChange={this.onMessageTextChange} />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" className="new-message-form__submit" />
       </form>
     )
   }
@@ -37,4 +37,3 @@ export default class NewMessageForm extends React.Component {
 NewMessageForm.propTypes = {
   onMessageSend: PropTypes.func.isRequired,
 }
-

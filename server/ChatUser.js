@@ -10,6 +10,10 @@ class ChatUser {
     this.sendInitializeInfo()
     this.socket.on('chat message', ({ text }) => chatServer.sendMessage({ username: this.username, text }))
     this.socket.on('disconnect', _ => chatServer.onDisconnection(this))
+    this.socket.on('username change', ({ username }) => {
+      this.username = username
+      chatServer.notifyUserListUpdate()
+    })
   }
 
   sendInitializeInfo() {
